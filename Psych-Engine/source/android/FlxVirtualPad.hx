@@ -28,7 +28,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 	public var buttonRight:FlxButton;
 	public var buttonDown:FlxButton;
         
-        //DUO PAD MODE
+        //PAD DUO MODE
 	public var buttonLeft2:FlxButton;
 	public var buttonUp2:FlxButton;
 	public var buttonRight2:FlxButton;
@@ -37,14 +37,41 @@ class FlxVirtualPad extends FlxSpriteGroup
 	public var dPad:FlxSpriteGroup;
 	public var actions:FlxSpriteGroup;
 
-	public function new(?DPad:FlxDPadMode, ?Action:FlxActionMode)
+	public var orgAlpha:Float = 0.75;
+	public var orgAntialiasing:Bool = true;
+
+	public function new(?DPad:FlxDPadMode, ?Action:FlxActionMode, ?alphaAlt:Float = 0.75, ?antialiasingAlt:Bool = true)
 	{
 		super();
 
+		orgAntialiasing = antialiasingAlt;
+		orgAlpha = alphaAlt;
+
 		dPad = new FlxSpriteGroup();
 		dPad.scrollFactor.set();
+
 		actions = new FlxSpriteGroup();
 		actions.scrollFactor.set();
+
+                buttonA = new FlxButton(0, 0);
+                buttonB = new FlxButton(0, 0);
+                buttonC = new FlxButton(0, 0);
+                buttonD = new FlxButton(0, 0);
+                buttonE = new FlxButton(0, 0);
+                buttonV = new FlxButton(0, 0);
+                buttonX = new FlxButton(0, 0);
+                buttonY = new FlxButton(0, 0);
+                buttonZ = new FlxButton(0, 0);
+
+                buttonLeft = new FlxButton(0, 0);
+                buttonUp = new FlxButton(0, 0);
+                buttonRight = new FlxButton(0, 0);
+                buttonDown = new FlxButton(0, 0);
+
+                buttonLeft2 = new FlxButton(0, 0);
+                buttonUp2 = new FlxButton(0, 0);
+                buttonRight2 = new FlxButton(0, 0);
+                buttonDown2 = new FlxButton(0, 0);
 
 		switch (DPad)
 		{
@@ -69,13 +96,10 @@ class FlxVirtualPad extends FlxSpriteGroup
 				dPad.add(add(buttonRight = createButton(FlxG.width - 44 * 3, FlxG.height - 66 - 81 * 3, 44 * 3, 45 * 3, "right")));
 				dPad.add(add(buttonDown = createButton(FlxG.width - 86 * 3, FlxG.height - 66 - 45 * 3, 44 * 3, 45 * 3, "down")));
                         case DUO:
-                                //Left Part
 				dPad.add(add(buttonUp = createButton(35 * 3, FlxG.height - 116 * 3, 44 * 3, 45 * 3, "up")));
 				dPad.add(add(buttonLeft = createButton(0, FlxG.height - 81 * 3, 44 * 3, 45 * 3, "left")));
 				dPad.add(add(buttonRight = createButton(69 * 3, FlxG.height - 81 * 3, 44 * 3, 45 * 3, "right")));
 				dPad.add(add(buttonDown = createButton(35 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "down")));
-                                
-                                //Right Part
 				dPad.add(add(buttonUp2 = createButton(FlxG.width - 86 * 3, FlxG.height - 66 - 116 * 3, 44 * 3, 45 * 3, "up")));
 				dPad.add(add(buttonLeft2 = createButton(FlxG.width - 128 * 3, FlxG.height - 66 - 81 * 3, 44 * 3, 45 * 3, "left")));
 				dPad.add(add(buttonRight2 = createButton(FlxG.width - 44 * 3, FlxG.height - 66 - 81 * 3, 44 * 3, 45 * 3, "right")));
@@ -139,21 +163,20 @@ class FlxVirtualPad extends FlxSpriteGroup
 	public function createButton(x:Float, y:Float, width:Int, height:Int, frames:String):FlxButton
 	{
 		var button = new FlxButton(x, y);
-		var frame = getVirtualInputFrames().getByName(frames);
-		button.frames = FlxTileFrames.fromFrame(frame, FlxPoint.get(width, height));
+		button.frames = FlxTileFrames.fromFrame(getFrames().getByName(frames), FlxPoint.get(width, height));
 		button.resetSizeFromFrame();
 		button.solid = false;
 		button.immovable = true;
 		button.scrollFactor.set();
-		
+		button.alpha = orgAlpha;
+		button.antialiasing = orgAntialiasing;
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;
 		#end
-
 		return button;
 	}
 
-	public static function getVirtualInputFrames():FlxAtlasFrames
+	public static function getFrames():FlxAtlasFrames
 	{
 		return Paths.getPackerAtlas('androidcontrols/virtualpad');
 	}
@@ -167,6 +190,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 
 		dPad = null;
 		actions = null;
+
 		buttonA = null;
 		buttonB = null;
 		buttonC = null;

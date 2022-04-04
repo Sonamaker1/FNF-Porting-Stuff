@@ -37,9 +37,8 @@ class AndroidControlsMenu extends MusicBeatState
 		curSelected = config.getcontrolmode();
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xFFea71fd;
-		bg.updateHitbox();
-		bg.screenCenter();
+		bg.scrollFactor.set();
+		bg.color = FlxColor.fromHSB(FlxG.random.int(0, 359), FlxG.random.float(0, 0.8), FlxG.random.float(0.3, 1));
 		add(bg);
 
 		var titleText:Alphabet = new Alphabet(0, 0, "Android Controls", true, false, 0, 0.6);
@@ -48,11 +47,11 @@ class AndroidControlsMenu extends MusicBeatState
 		titleText.alpha = 0.4;
 		add(titleText);
 
-		vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
+		vpad = new FlxVirtualPad(RIGHT_FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);
 		vpad.alpha = 0;
 		add(vpad);
 
-		hbox = new FlxHitbox();
+		hbox = new FlxHitbox(0.75, ClientPrefs.globalAntialiasing);
 		hbox.visible = false;
 		add(hbox);
 
@@ -151,24 +150,20 @@ class AndroidControlsMenu extends MusicBeatState
 		{
 				case 'Pad-Right':
 					remove(vpad);
-					vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
-					vpad.alpha = 0.75;
+					vpad = new FlxVirtualPad(RIGHT_FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);
 					add(vpad);
 				case 'Pad-Left':
 					remove(vpad);
-					vpad = new FlxVirtualPad(FULL, NONE);
-					vpad.alpha = 0.75;
+					vpad = new FlxVirtualPad(FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);
 					add(vpad);
 				case 'Pad-Custom':
 					remove(vpad);
-					vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
-					vpad.alpha = 0.75;
+					vpad = new FlxVirtualPad(RIGHT_FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);
 					add(vpad);
 					loadcustom();
 				case 'Duo':
 					remove(vpad);
-					vpad = new FlxVirtualPad(DUO, NONE);
-					vpad.alpha = 0.75;
+					vpad = new FlxVirtualPad(DUO, NONE, 0.75, ClientPrefs.globalAntialiasing);
 					add(vpad);
 				case 'Hitbox':
 					vpad.alpha = 0;
