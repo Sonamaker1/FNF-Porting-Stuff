@@ -7,7 +7,7 @@ The Things im using when i port a mod to android
 
 To Install Them You Need To Open Command prompt/PowerShell And To Tipe
 ```cmd
-haxelib git AndroidTools https://github.com/jigsaw-4277821/AndroidTools.git
+haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools.git
 
 haxelib git extension-videoview https://github.com/jigsaw-4277821/extension-videoview.git
 
@@ -67,7 +67,7 @@ Than, After the Libraries, or where the packeges are located
 add
 ```xml
         <haxelib name="extension-videoview" if="android"/>
-        <haxelib name="AndroidTools" if="android"/>
+        <haxelib name="extension-androidtools" if="android"/>
 
         <config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>
         <config:android permission="android.permission.WRITE_EXTERNAL_STORAGE" if="android"/>
