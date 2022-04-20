@@ -20,7 +20,7 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty' #if android, 'Charting Mode', 'Chart Editor', 'Character Editor' #end, 'Exit to menu'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty' #if android, 'Chart Editor' #end, 'Exit to menu'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -40,7 +40,6 @@ class PauseSubState extends MusicBeatSubstate
 
 		if(PlayState.chartingMode)
 		{
-		        menuItemsOG.remove('Charting Mode');
 			menuItemsOG.insert(2, 'Leave Charting Mode');
 			
 			var num:Int = 0;
@@ -234,11 +233,8 @@ class PauseSubState extends MusicBeatSubstate
 				case "Restart Song":
 					restartSong();
 				case "Leave Charting Mode":
-					close();
+					restartSong();
 					PlayState.chartingMode = false;
-			        case "Charting Mode":
-					close();
-					PlayState.chartingMode = true;
 				case 'Skip Time':
 					if(curTime < Conductor.songPosition)
 					{
@@ -265,9 +261,6 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplaySine = 0;
                                 case 'Chart Editor':
 		                        MusicBeatState.switchState(new editors.ChartingState());
-		                        PlayState.chartingMode = true;
-		                case 'Character Editor':
-		                        MusicBeatState.switchState(new editors.CharacterEditorState());
 		                        PlayState.chartingMode = true;
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
